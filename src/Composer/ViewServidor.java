@@ -5,6 +5,11 @@
  */
 package Composer;
 
+import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
+
 /**
  *
  * @author luizl
@@ -18,7 +23,12 @@ public class ViewServidor extends javax.swing.JDialog {
      */
     public ViewServidor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        getContentPane().setBackground(new Color(255, 255, 255));
         initComponents();
+        //Como alterar o ícone default do java JFrame Swing?
+        URL url = this.getClass().getResource("/Imagens/composer_icone.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(iconeTitulo);
         jLabel6.setVisible(false);
     }
 
@@ -38,7 +48,9 @@ public class ViewServidor extends javax.swing.JDialog {
         jPainel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Servidor");
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OK.png"))); // NOI18N
@@ -199,5 +211,4 @@ public class ViewServidor extends javax.swing.JDialog {
     }
 
 //get e set
-    
 }

@@ -1,6 +1,6 @@
 package cmd;
 
-import static Composer.Composer.txtArea;
+import static Composer.ViewComposer.txtArea;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -43,7 +43,7 @@ public class cmd implements Runnable {
                         i++;
                     }
                 }
-                txtArea.append("\n " + i + ">  " + "Fin");
+                txtArea.append("\n " + i + ">  " + "FIM");
                 cmd.control = false;
             } catch (IOException ex) {
                 ex.getStackTrace();

@@ -8,24 +8,23 @@ package Composer;
 import cmd.cmd;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import javax.swing.JOptionPane;
-import java.lang.String;
+import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 
 /**
  *
  * @author luizl
  */
-public class Composer extends javax.swing.JFrame {
+public class ViewComposer extends javax.swing.JFrame {
 
     //armazena a posição do mouse
     int xMouse;
@@ -41,27 +40,37 @@ public class Composer extends javax.swing.JFrame {
     /**
      * Creates new form Composer
      */
-    public Composer() {
+    public ViewComposer() {
         getContentPane().setBackground(new Color(255, 255, 255));
         initComponents();
+        //Como alterar o ícone default do java JFrame Swing?
+        URL url = this.getClass().getResource("/Imagens/composer_icone.png");
+        Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
+        this.setIconImage(iconeTitulo);
+
         jTextField1.setText(System.getProperty("user.dir") + "\\");
-        jTextField2.setText("C:\\wamp64\\bin\\php");
-        ListarArquivos(jTextField2.getText());
-        jComboBox1.setSelectedIndex(jComboBox1.getItemCount() - 1);
-        jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
-
-        jLabel6.setVisible(false);
-        jLabel7.setVisible(false);
-
         this.setSize(new Dimension(593, 206));
-        //chama a tela de atualização
+        //chama a tela de servidor
         this.viewServidor = new ViewServidor(this, true);
         viewServidor.setVisible(true);
         if (viewServidor.isServido_wamp()) {
             System.out.println(" wanp");
+            jTextField2.setText("C:\\wamp64\\bin\\php");
+            ListarArquivos(jTextField2.getText());
+            jComboBox1.setSelectedIndex(jComboBox1.getItemCount() - 1);
+            jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
         } else {
             System.out.println(" Xamp");
+            jTextField2.setText("C:\\xampp\\php");
         }
+        jLabel7.setVisible(false);
+
+        if (arquivoExiste(jTextField1.getText(), "/composer.lock")) {
+            jPainel1.setText("Instalar");
+        } else {
+            jPainel1.setText("Instalado");
+        }
+
     }
 
     /**
@@ -73,9 +82,14 @@ public class Composer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPainel1 = new javax.swing.JLabel();
         jPainel2 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jPainel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jlFehar = new javax.swing.JLabel();
@@ -94,12 +108,6 @@ public class Composer extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jPainel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jPainel6 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jPainel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -116,7 +124,32 @@ public class Composer extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         txtAreaConfig = new javax.swing.JTextArea();
 
+        jMenuItem1.setText("Abrir Projeto");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem1);
+
+        jMenuItem3.setText("Configurar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem3);
+
+        jMenuItem2.setText("Sobre");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jPopupMenu1.add(jMenuItem2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Composer");
         setUndecorated(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,11 +186,13 @@ public class Composer extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OK.png"))); // NOI18N
+
         jPainel3.setForeground(new java.awt.Color(238, 112, 82));
         jPainel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPainel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/manutencao.png"))); // NOI18N
-        jPainel3.setText("Configurar");
-        jPainel3.setToolTipText("Configurações do sistema");
+        jPainel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/download.png"))); // NOI18N
+        jPainel3.setText("Baixar composer");
+        jPainel3.setToolTipText("Baixar composer direto da internet");
         jPainel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPainel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPainel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -218,6 +253,14 @@ public class Composer extends javax.swing.JFrame {
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/menu_on.png"))); // NOI18N
         jLabel14.setToolTipText("Menus de Opções");
         jLabel14.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jLabel14MouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -226,7 +269,7 @@ public class Composer extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addComponent(jlTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(130, 130, 130)
                 .addComponent(jlMinimizar)
@@ -255,7 +298,7 @@ public class Composer extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(switchConfig, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(436, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,30 +313,38 @@ public class Composer extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jPainel1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
                 .addComponent(jPainel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39)
-                .addComponent(jPainel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addComponent(jLabel7))
+                    .addComponent(jPainel3, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPainel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPainel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPainel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPainel1, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPainel2, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPainel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(11, 11, 11)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        shapeTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
+        shapeTabbedPane1.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -331,66 +382,6 @@ public class Composer extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OK.png"))); // NOI18N
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
-
-        jPainel4.setForeground(new java.awt.Color(238, 112, 82));
-        jPainel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPainel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/wamp_server.png"))); // NOI18N
-        jPainel4.setText("WAMP SERVER");
-        jPainel4.setToolTipText("Permite adicionar e editar atributos de uma tabela ou manualmente");
-        jPainel4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPainel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPainel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPainel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPainel4.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPainel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPainel4MouseClicked(evt);
-            }
-        });
-        jPanel5.add(jPainel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 22, 130, 120));
-
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OK.png"))); // NOI18N
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
-
-        jPainel6.setForeground(new java.awt.Color(238, 112, 82));
-        jPainel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPainel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/download.png"))); // NOI18N
-        jPainel6.setText("Baixar composer");
-        jPainel6.setToolTipText("Permite adicionar e editar atributos de uma tabela ou manualmente");
-        jPainel6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPainel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPainel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPainel6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPainel6.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPainel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPainel6MouseClicked(evt);
-            }
-        });
-        jPanel5.add(jPainel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(207, 22, 130, 120));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/OK.png"))); // NOI18N
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 20, -1, -1));
-
-        jPainel5.setForeground(new java.awt.Color(238, 112, 82));
-        jPainel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPainel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/xamp.png"))); // NOI18N
-        jPainel5.setText("XAMP");
-        jPainel5.setToolTipText("Permite adicionar e editar atributos de uma tabela ou manualmente");
-        jPainel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jPainel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPainel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPainel5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jPainel5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPainel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPainel5MouseClicked(evt);
-            }
-        });
-        jPanel5.add(jPainel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 130, 120));
 
         jLabel2.setText("PHP");
 
@@ -469,13 +460,13 @@ public class Composer extends javax.swing.JFrame {
 
         shapeTabbedPane1.addTab("Configuração", jPanel2);
 
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setForeground(new java.awt.Color(255, 255, 255));
 
         txtQuery.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         txtQuery.setForeground(new java.awt.Color(255, 102, 0));
         txtQuery.setInheritsPopupMenu(true);
 
-        jLabel8.setForeground(new java.awt.Color(0, 255, 51));
         jLabel8.setText("Query");
 
         txtArea.setColumns(20);
@@ -528,6 +519,8 @@ public class Composer extends javax.swing.JFrame {
 
         shapeTabbedPane1.addTab("CMD", jPanel8);
 
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
         txtAreaComposer.setColumns(20);
         txtAreaComposer.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         txtAreaComposer.setForeground(new java.awt.Color(0, 102, 51));
@@ -553,6 +546,8 @@ public class Composer extends javax.swing.JFrame {
         );
 
         shapeTabbedPane1.addTab("composer.json", jPanel7);
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
         txtAreaConfig.setColumns(20);
         txtAreaConfig.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
@@ -595,7 +590,7 @@ public class Composer extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(shapeTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, Short.MAX_VALUE)
+                .addComponent(shapeTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -629,7 +624,7 @@ public class Composer extends javax.swing.JFrame {
 
     private void jlMinimizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jlMinimizarMouseClicked
         // Minimiza
-        this.setState(Composer.ICONIFIED);
+        this.setState(ViewComposer.ICONIFIED);
     }//GEN-LAST:event_jlMinimizarMouseClicked
 
     private void jPanel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MousePressed
@@ -707,26 +702,52 @@ public class Composer extends javax.swing.JFrame {
             txtArea.setText("");
             cmd c = new cmd();
             c.getLine(commandosInstalacoa);
-            shapeTabbedPane1.setEnabledAt(1, true);
+            shapeTabbedPane1.setVisible(true);
 
         }
     }//GEN-LAST:event_jPainel1MouseClicked
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-        // TODO add your handling code here:
+        if (arquivoExiste(jTextField1.getText(), "/composer.lock")) {
+            jPainel1.setText("Instalar");
+        } else {
+            jPainel1.setText("Instalado");
+        }
 
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
         ListarArquivos(jTextField2.getText());
         jComboBox1.setSelectedIndex(jComboBox1.getItemCount() - 1);
-        jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
+        if (viewServidor.isServido_wamp()) {
+            System.out.println(" wanp");
+            jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
+        } else {
+            System.out.println(" Xamp");
+            jTextField3.setText(String.valueOf(jTextField2.getText() + "\\php.exe"));
+        }
+        if (arquivoExiste(jTextField1.getText(), "/composer.lock")) {
+            jPainel1.setText("Instalar");
+        } else {
+            jPainel1.setText("Instalado");
+        }
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jComboBox1PopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_jComboBox1PopupMenuWillBecomeInvisible
         // verifica se popu do combobox e visivel
         if (jComboBox1.isPopupVisible()) {
-            jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
+            if (viewServidor.isServido_wamp()) {
+                System.out.println(" wanp");
+                jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
+            } else {
+                System.out.println(" Xamp");
+                jTextField3.setText(String.valueOf(jTextField2.getText() + "\\php.exe"));
+            }
+            if (arquivoExiste(jTextField1.getText(), "/composer.lock")) {
+                jPainel1.setText("Instalar");
+            } else {
+                jPainel1.setText("Instalado");
+            }
         }
     }//GEN-LAST:event_jComboBox1PopupMenuWillBecomeInvisible
 
@@ -742,37 +763,18 @@ public class Composer extends javax.swing.JFrame {
 
         if (!f.getPath().isEmpty() || fc.getSelectedFile() != null) {
             jTextField2.setText(f.getPath() + "\\");
-            jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
-
+            if (viewServidor.isServido_wamp()) {
+                System.out.println(" wanp");
+                jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
+            } else {
+                System.out.println(" Xamp");
+                jTextField3.setText(String.valueOf(jTextField2.getText() + "\\php.exe"));
+            }
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jPainel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPainel3MouseClicked
-        if (jPainel3.getText().equals("Configurar")) {
-            jPainel3.setText("Configurando");
-            this.setSize(new Dimension(593, 570));
-        } else {
-            jPainel3.setText("Configurar");
-            this.setSize(new Dimension(593, 206));
-        }
-    }//GEN-LAST:event_jPainel3MouseClicked
-
-    private void jPainel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPainel4MouseClicked
-
-        jLabel6.setVisible(false);
-        servido_wamp = true;
-        jLabel5.setVisible(true);
-    }//GEN-LAST:event_jPainel4MouseClicked
-
-    private void jPainel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPainel5MouseClicked
-        servido_wamp = false;
-        jLabel5.setVisible(false);
-        jLabel6.setVisible(true);
-    }//GEN-LAST:event_jPainel5MouseClicked
-
-    private void jPainel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPainel6MouseClicked
-        // TODO add your handling code here:
         if (baixar) {
             baixar = false;
             jLabel7.setVisible(false);
@@ -780,58 +782,18 @@ public class Composer extends javax.swing.JFrame {
             baixar = true;
             jLabel7.setVisible(true);
         }
-    }//GEN-LAST:event_jPainel6MouseClicked
+    }//GEN-LAST:event_jPainel3MouseClicked
 
     private void jPainel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPainel2MouseClicked
         //-------------------------------------------------------------------------
-        //grava o .bat de instalação
-        try {
-            File file = new File(jTextField1.getText() + "/composerUpdate.bat");
-            if (!file.exists()) {
-                int dialogo = JOptionPane.YES_OPTION;
-                int result = JOptionPane.showConfirmDialog(this, "O arquivo composerUpdate.bat ja existe deseja sobreescrevelo?", "Sair", dialogo);
-                if (result == 0) {
-                    FileWriter arq = new FileWriter(jTextField1.getText() + "/composerUpdate.bat");
-                    PrintWriter gravarArq = new PrintWriter(arq);
-                    gravarArq.printf("%n@echo  + ============================================================%n");
-                    gravarArq.printf("%n@echo  + ===================== Analise em curso =====================%n");
-                    gravarArq.printf("%n@echo  + ============================================================%n");
-                    gravarArq.printf(
-                            "  @echo  ______\n"
-                            + "@echo  / ____/___  ____ ___  ____  ____  ________  _____\n"
-                            + "@echo / /   / __ \\/ __ `__ \\/ __ \\/ __ \\/ ___/ _ \\/ ___/\n"
-                            + "@echo/ /___/ /_/ / / / / / / /_/ / /_/ (__  )  __/ /\n"
-                            + "@echo\\____/\\____/_/ /_/ /_/ .___/\\____/____/\\___/_/\n");
-                    gravarArq.printf("cd\\%n");
-                    gravarArq.printf("cd " + jTextField1.getText() + "%n");
-                    gravarArq.printf(jTextField3.getText() + "  composer.phar update %n");
-                    gravarArq.printf("%n@echo  + ============================================================%n");
-                    gravarArq.printf("%n@echo  + ===========================Comcluido========================%n");
-
-                    arq.close();
-
-                }
-            }
-
-        } catch (IOException ex) {
-            Logger.getLogger(Composer.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
-
-        //-------------------------------------------------------------------------
-        String comando = "cmd.exe /c start \"\" \""
-                + jTextField1.getText() + "/composerUpdate.bat"
-                + "\" ";
-        try {
-            Process exec = Runtime.getRuntime().exec(comando);
-            if (exec.waitFor() == 0) {
-                System.out.println("OK");
-            } else {
-                System.out.println("ERRO: " + exec.exitValue());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //gatualiza o copose
+        String commandosUpdate = "cd\\ "
+                + "&& cd " + jTextField1.getText()
+                + " && " + jTextField3.getText() + "  composer.phar update";
+        txtArea.setText("");
+        cmd c = new cmd();
+        c.getLine(commandosUpdate);
+        shapeTabbedPane1.setVisible(true);
     }//GEN-LAST:event_jPainel2MouseClicked
 
     private void btnEjecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEjecutarActionPerformed
@@ -843,6 +805,51 @@ public class Composer extends javax.swing.JFrame {
             c.getLine(this.txtQuery.getText());
         }
     }//GEN-LAST:event_btnEjecutarActionPerformed
+
+    private void jLabel14MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseReleased
+//        if (evt.isPopupTrigger()) {
+//            jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+//
+//        }
+        jPopupMenu1.show(evt.getComponent(), evt.getX(), evt.getY());
+    }//GEN-LAST:event_jLabel14MouseReleased
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel14MouseClicked
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        JFileChooser fc = new JFileChooser();
+        fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.showOpenDialog(null);
+        File f = fc.getSelectedFile();
+
+        if (!f.getPath().isEmpty() || fc.getSelectedFile() != null) {
+            jTextField2.setText(f.getPath() + "\\");
+            jTextField3.setText(String.valueOf(jTextField2.getText() + "\\" + jComboBox1.getSelectedItem() + "\\php.exe"));
+            if (arquivoExiste(jTextField1.getText(), "/composer.lock")) {
+                jPainel1.setText("Instalar");
+            } else {
+                jPainel1.setText("Instalado");
+            }
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        //chama a tela de atualização
+        this.viewSobre = new ViewSobre(this, true);
+        viewSobre.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        if (jMenuItem3.getText().equals("Configurar")) {
+            jMenuItem3.setText("Configurando");
+            this.setSize(new Dimension(593, 570));
+        } else {
+            jMenuItem3.setText("Configurar");
+            this.setSize(new Dimension(593, 206));
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -862,27 +869,28 @@ public class Composer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Composer.class
+            java.util.logging.Logger.getLogger(ViewComposer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Composer.class
+            java.util.logging.Logger.getLogger(ViewComposer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Composer.class
+            java.util.logging.Logger.getLogger(ViewComposer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Composer.class
+            java.util.logging.Logger.getLogger(ViewComposer.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Composer().setVisible(true);
+                new ViewComposer().setVisible(true);
             }
         });
     }
@@ -896,17 +904,15 @@ public class Composer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JLabel jPainel1;
     private javax.swing.JLabel jPainel2;
     private javax.swing.JLabel jPainel3;
-    private javax.swing.JLabel jPainel4;
-    private javax.swing.JLabel jPainel5;
-    private javax.swing.JLabel jPainel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -915,6 +921,7 @@ public class Composer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
