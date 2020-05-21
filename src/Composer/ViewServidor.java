@@ -60,7 +60,7 @@ public class ViewServidor extends javax.swing.JDialog {
         jPainel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPainel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/wamp_server.png"))); // NOI18N
         jPainel4.setText("WAMP SERVER");
-        jPainel4.setToolTipText("Permite adicionar e editar atributos de uma tabela ou manualmente");
+        jPainel4.setToolTipText("Permite escolher as cofigurações para o servido WMP SERVER");
         jPainel4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPainel4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPainel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -83,7 +83,7 @@ public class ViewServidor extends javax.swing.JDialog {
         jPainel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPainel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/xamp.png"))); // NOI18N
         jPainel5.setText("XAMP");
-        jPainel5.setToolTipText("Permite adicionar e editar atributos de uma tabela ou manualmente");
+        jPainel5.setToolTipText("Permite escolher as cofigurações para o servido XAMPP");
         jPainel5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jPainel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPainel5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));

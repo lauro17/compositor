@@ -75,7 +75,7 @@
               <Image iconType="3" name="/Imagens/wamp_server.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="WAMP SERVER"/>
-            <Property name="toolTipText" type="java.lang.String" value="Permite adicionar e editar atributos de uma tabela ou manualmente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Permite escolher as cofigura&#xe7;&#xf5;es para o servido WMP SERVER"/>
             <Property name="verticalAlignment" type="int" value="3"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -120,7 +120,7 @@
               <Image iconType="3" name="/Imagens/xamp.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="XAMP"/>
-            <Property name="toolTipText" type="java.lang.String" value="Permite adicionar e editar atributos de uma tabela ou manualmente"/>
+            <Property name="toolTipText" type="java.lang.String" value="Permite escolher as cofigura&#xe7;&#xf5;es para o servido XAMPP"/>
             <Property name="verticalAlignment" type="int" value="3"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">

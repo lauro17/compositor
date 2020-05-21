@@ -8,6 +8,7 @@ package Composer;
 import Util.Atualizacao;
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,26 +39,34 @@ public class ViewSobre extends javax.swing.JDialog {
         URL url = this.getClass().getResource("/Imagens/composer_icone.png");
         Image iconeTitulo = Toolkit.getDefaultToolkit().getImage(url);
         this.setIconImage(iconeTitulo);
-
+        
         jLabelDownload.setVisible(false);
-
         //buscando atualizações
         jLabel5.setText("Buscando atualização...");
+        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Imagens/loading_pesquisar.gif")));
+        jLabel5.setSize(new Dimension(582, 69));
+        //jLabel6.setVisible(true);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(5000);
                     if (Atualizacao.verificaConexao()) {
-                        if (Atualizacao.obtemVersao().equals("1.0.1")) {
+                        if (Atualizacao.obtemVersao().equals("1.0.0")) {
                             jLabel5.setText("Você esta utilizando a verão mais resente");
+                            jLabel5.setIcon(new ImageIcon(getClass().getResource("")));
+                            jLabel5.setSize(new Dimension(582, 14));
                         } else {
-                            jLabel5.setText("A Versão " + Atualizacao.obtemVersao() + "ja esta disponivel");
+                            jLabel5.setText("A Versão " + Atualizacao.obtemVersao() + " ja esta disponivel");
+                            jLabel5.setIcon(new ImageIcon(getClass().getResource("")));
+                            jLabel5.setSize(new Dimension(582, 14));
                             jLabelDownload.setVisible(true);
                         }
                     } else {
-
+                        
                         jLabel5.setText("Verifique a sua conexão de internet");
+                        jLabel5.setIcon(new ImageIcon(getClass().getResource("")));
+                        jLabel5.setSize(new Dimension(582, 14));
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ViewSobre.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,10 +93,14 @@ public class ViewSobre extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabelDownload = new javax.swing.JLabel();
+        jLabel48 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(238, 112, 82));
+        jPanel1.setToolTipText("Servidor");
+        jPanel1.setAutoscrolls(true);
 
         rSPanelImage1.setImagen(new javax.swing.ImageIcon(getClass().getResource("/Imagens/composer_logo.png"))); // NOI18N
 
@@ -101,18 +115,32 @@ public class ViewSobre extends javax.swing.JDialog {
             .addGap(0, 191, Short.MAX_VALUE)
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(238, 112, 82));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Empresa: Analise em Curso");
+        jLabel1.setAutoscrolls(true);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(238, 112, 82));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Autor: Luiz Lauro Silva Gonçalves");
+        jLabel2.setAutoscrolls(true);
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Verão:  1.0.0");
+        jLabel3.setAutoscrolls(true);
 
+        jLabel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(238, 112, 82));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Atualizar");
+        jLabel4.setAutoscrolls(true);
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.setOpaque(true);
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
@@ -125,11 +153,17 @@ public class ViewSobre extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(238, 112, 82));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Resposta");
+        jLabel5.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel5.setAutoscrolls(true);
 
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(238, 112, 82));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("https://getcomposer.org");
+        jLabel7.setAutoscrolls(true);
         jLabel7.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -143,9 +177,14 @@ public class ViewSobre extends javax.swing.JDialog {
             }
         });
 
+        jLabelDownload.setBackground(new java.awt.Color(255, 255, 255));
+        jLabelDownload.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelDownload.setForeground(new java.awt.Color(238, 112, 82));
         jLabelDownload.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelDownload.setText("Download");
+        jLabelDownload.setAutoscrolls(true);
         jLabelDownload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabelDownload.setOpaque(true);
         jLabelDownload.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelDownloadMouseClicked(evt);
@@ -158,32 +197,31 @@ public class ViewSobre extends javax.swing.JDialog {
             }
         });
 
+        jLabel48.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(238, 112, 82));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel48.setText("Criado e Destribuido Por Analise em Curso ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel48, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 193, Short.MAX_VALUE)
+                        .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(150, 150, 150)
-                                .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(10, 10, 10))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(188, 188, 188)
-                        .addComponent(jLabelDownload, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabelDownload, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -194,19 +232,21 @@ public class ViewSobre extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4))
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(rSPanelImage1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel48)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabelDownload, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabelDownload, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addGap(19, 19, 19))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -227,11 +267,13 @@ public class ViewSobre extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-        jLabel4.setForeground(new Color(0, 0, 153));
+        jLabel4.setForeground(new Color(255, 255, 255));
+        jLabel4.setBackground(new Color(238, 112, 82));
     }//GEN-LAST:event_jLabel4MouseEntered
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-        jLabel4.setForeground(new Color(0, 0, 0));
+        jLabel4.setForeground(new Color(238, 112, 82));
+        jLabel4.setBackground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabel4MouseExited
 
     private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
@@ -256,22 +298,32 @@ public class ViewSobre extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        //buscando atualizações
+        jLabelDownload.setVisible(false);
         jLabel5.setText("Buscando atualização...");
+        jLabel5.setIcon(new ImageIcon(getClass().getResource("/Imagens/loading_pesquisar.gif")));
+        jLabel5.setSize(new Dimension(582, 69));
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     Thread.sleep(5000);
                     if (Atualizacao.verificaConexao()) {
-                        if (Atualizacao.obtemVersao().equals("1.0.1")) {
+                        if (Atualizacao.obtemVersao().equals("1.0.0")) {
                             jLabel5.setText("Você esta utilizando a verão mais resente");
+                            jLabel5.setIcon(new ImageIcon(getClass().getResource("")));
+                            jLabel5.setSize(new Dimension(582, 14));
                         } else {
-                            jLabel5.setText("A Versão " + Atualizacao.obtemVersao() + "ja esta disponivel");
+                            jLabel5.setText("A Versão " + Atualizacao.obtemVersao() + " ja esta disponivel");
+                            jLabel5.setIcon(new ImageIcon(getClass().getResource("")));
+                            jLabel5.setSize(new Dimension(582, 14));
                             jLabelDownload.setVisible(true);
                         }
                     } else {
-
+                        
                         jLabel5.setText("Verifique a sua conexão de internet");
+                        jLabel5.setIcon(new ImageIcon(getClass().getResource("")));
+                        jLabel5.setSize(new Dimension(582, 14));
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(ViewSobre.class.getName()).log(Level.SEVERE, null, ex);
@@ -285,13 +337,13 @@ public class ViewSobre extends javax.swing.JDialog {
     }//GEN-LAST:event_jLabelDownloadMouseClicked
 
     private void jLabelDownloadMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDownloadMouseEntered
-        jLabelDownload.setForeground(new Color(0, 0, 153));
-        jLabelDownload.setBackground(new Color(51, 255, 255));
+        jLabelDownload.setForeground(new Color(255, 255, 255));
+        jLabelDownload.setBackground(new Color(238, 112, 82));
     }//GEN-LAST:event_jLabelDownloadMouseEntered
 
     private void jLabelDownloadMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDownloadMouseExited
-        jLabelDownload.setForeground(new Color(0, 0, 0));
-        jLabelDownload.setBackground(new Color(240, 240, 240));
+        jLabelDownload.setForeground(new Color(238, 112, 82));
+        jLabelDownload.setBackground(new Color(255, 255, 255));
     }//GEN-LAST:event_jLabelDownloadMouseExited
 
     /**
@@ -341,6 +393,7 @@ public class ViewSobre extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelDownload;
